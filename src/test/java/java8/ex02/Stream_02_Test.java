@@ -37,7 +37,7 @@ public class Stream_02_Test {
 
         // TODO calculer les statistiques sur les prix des pizzas vendues
         // TODO utiliser l'opération summaryStatistics
-        IntSummaryStatistics result = orders.stream().flatMap(orders -> orders.getPizzas()).collect(Collectors.summarizingInt(Pizza :: getPrice));
+        IntSummaryStatistics result = orders.stream().flatMap(order -> order.getPizzas().stream()).collect(Collectors.summarizingInt(Pizza :: getPrice));
 
 
         assertThat(result.getSum(), is(10900L));

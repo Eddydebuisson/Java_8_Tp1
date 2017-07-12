@@ -16,7 +16,8 @@ public class Stream_04_Test {
     @Test
     public void test_of() throws Exception {
         // Construire un stream permettant de rendre le test passant
-        Stream<String> result = null;
+       
+    	Stream<String> result = null;
 
         assertThat(result.toArray(), arrayContaining("Alexandra", "Cyril", "Johnny", "Marion", "Sophie"));
     }
