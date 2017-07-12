@@ -22,53 +22,56 @@ import static org.junit.Assert.*;
  */
 public class Stream_03_Test {
 
-    @Test
-    public void test_joining() throws Exception {
+	@Test
+	public void test_joining() throws Exception {
 
-        List<Customer> customers = new Data().getCustomers();
+		List<Customer> customers = new Data().getCustomers();
 
-        // TODO construire une chaîne contenant les prénoms des clients triés et séparé par le caractère "|"
-        String result = customers.stream().map(c -> c.getFirstname()).sorted().collect(Collectors.joining("|"));
+		// TODO construire une chaîne contenant les prénoms des clients triés et
+		// séparé par le caractère "|"
+		String result = customers.stream().map(c -> c.getFirstname()).sorted().collect(Collectors.joining("|"));
 
-        assertThat(result, is("Alexandra|Cyril|Johnny|Marion|Sophie"));
-    }
+		assertThat(result, is("Alexandra|Cyril|Johnny|Marion|Sophie"));
+	}
 
-    @Test
-    public void test_grouping() throws Exception {
+	@Test
+	public void test_grouping() throws Exception {
 
-        List<Order> orders = new Data().getOrders();
+		List<Order> orders = new Data().getOrders();
 
-        // TODO construire une Map <Client, Commandes effectuées par le client
-        Map<Customer, List<Order>> result = orders.stream().collect(Collectors.groupingBy(Order::getCustomer));
+		// TODO construire une Map <Client, Commandes effectuées par le client
+		Map<Customer, List<Order>> result = orders.stream().collect(Collectors.groupingBy(Order::getCustomer));
 
-        assertThat(result.size(), is(2));
-        assertThat(result.get(new Customer(1)), hasSize(4));
-        assertThat(result.get(new Customer(2)), hasSize(4));
-    }
+		assertThat(result.size(), is(2));
+		assertThat(result.get(new Customer(1)), hasSize(4));
+		assertThat(result.get(new Customer(2)), hasSize(4));
+	}
 
-    @Test
-    public void test_partitionning() throws Exception {
-        List<Pizza> pizzas = new Data().getPizzas();
+	@Test
+	public void test_partitionning() throws Exception {
+		List<Pizza> pizzas = new Data().getPizzas();
 
-        // TODO Séparer la liste des pizzas en 2 ensembles :
-        // TODO true -> les pizzas dont le nom commence par "L"
-        // TODO false -> les autres
-        Map<Boolean, List<Pizza>> result = pizzas.stream().collect(partitioningBy(p -> p.getName().startsWith("L")));
+		// TODO Séparer la liste des pizzas en 2 ensembles :
+		// TODO true -> les pizzas dont le nom commence par "L"
+		// TODO false -> les autres
+		Map<Boolean, List<Pizza>> result = pizzas.stream().collect(partitioningBy(p -> p.getName().startsWith("L")));
 
-        assertThat(result.get(true), hasSize(6));
-        assertThat(result.get(false), hasSize(2));
-    }
+		assertThat(result.get(true), hasSize(6));
+		assertThat(result.get(false), hasSize(2));
+	}
 
-    @Test
-    public void test_mapping() throws Exception {
+	@Test
+	public void test_mapping() throws Exception {
 
-        List<Customer> customers = new Data().getCustomers();
+		List<Customer> customers = new Data().getCustomers();
 
-        // TODO Construire la map Sexe -> Chaîne représentant les prénoms des clients
-        Map<Gender, String> result = customers.stream().sorted(Comparator.comparing(Customer::getFirstname)).collect(Collectors.toMap(Customer::getGender, Customer::getFirstname, (p1 , p2) -> p1+"|"+p2 ));
- ;
+		// TODO Construire la map Sexe -> Chaîne représentant les prénoms des
+		// clients
+		Map<Gender, String> result = customers.stream().sorted(Comparator.comparing(Customer::getFirstname))
+				.collect(Collectors.toMap(Customer::getGender, Customer::getFirstname, (p1, p2) -> p1 + "|" + p2));
+		;
 
-        assertThat(result.get(Gender.F), is("Alexandra|Marion|Sophie"));
-        assertThat(result.get(Gender.M), is("Cyril|Johnny"));
-    }
+		assertThat(result.get(Gender.F), is("Alexandra|Marion|Sophie"));
+		assertThat(result.get(Gender.M), is("Cyril|Johnny"));
+	}
 }
